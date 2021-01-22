@@ -9,11 +9,9 @@ Low, D. M., Randolph, G., Rao, V., Ghosh, S. S. & Song, P., C. (2020). Uncoverin
 ## 1. Data
 
 Note: 
-* "speech" refers to "reading" task in manuscript.
+* "speech" in this repo refers to "reading" task in the manuscript.
 * The original audio wav files cannot be shared due to consent restrictions. Here we provide the extracted eGeMAPS features (see manuscript for details).
 
-
-<!--Available at [Open Science Framework](https://osf.io/7q2ux/)-->
 
 #### 1.1. Demographic information 
 * `./data/input/VFP_DeidentifiedDemographics.csv` De-identified demographic information
@@ -50,11 +48,11 @@ To run the `.py` (inluding pydra-ml package) or the `.ipynb` on Jupter Notebook,
 * `./data/input/VFP_DeidentifiedDemographics.csv` De-identified demographic information
 * `demographics.py` Script to obtain info for Table 1.
 
-#### 2.3. Figure 2 and Sup. Fig. 1-8
+#### 2.3. Sup. Fig. S1-S9
 * `collinearity.py` remove redudant features (reduce multicollinearity) 
 * `redudant_features.ipynb` Clustermap
 
-#### 2.4. Run models: output Figure 4 and data used for other codes:
+#### 2.4. Run models: output Figure 2 and data used for other scripts:
 We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a spec file is needed where the dataset is specified. The dataset needs to be in the same dir where the spec file is run. Since we ran models on a cluster, we have SLURM scripts, so  the dataset is in the same dir as the SLURM scripts.
 `if` and `indfact` stand for independence factor, the algorithm we created for removing redundant features. 
 * `./vfp_v7_indfact/` dir 
@@ -69,13 +67,13 @@ We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a s
 * `./vfp_v8_top5/` runs top 5 featurs specificed in spec files
    
 
-#### 2.5. Figure 3 and Table 2:
+#### 2.5. Figure S10 and Table 2:
 * `analyze_results.py` takes `outputs/out-*` files from pydra-ml and produces summaries which were then concatenated into table 2. 
 
-#### 2.6. Figure 5
+#### 2.6. Figure 3
 * `shap_analysis.ipynb` 
 
-#### 2.7. Figure 6
+#### 2.7. Figure 4
 * `./vfp_v8_top1outof5/` runs one of the top 5 features at a time.
 * `shap_analysis.ipynb` makes the plots
 
