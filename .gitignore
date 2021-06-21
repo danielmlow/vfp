@@ -5,7 +5,7 @@ data/output/*/messages
 data/output/*/outputs_original_full/
 audios
 
-
+.idea/*
 .DS_Store
 
 # Byte-compiled / optimized / DLL files

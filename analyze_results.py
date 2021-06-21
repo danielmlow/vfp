@@ -1,4 +1,5 @@
 
+
 import os
 import pickle
 import json
@@ -35,7 +36,7 @@ def performance_table(results, permute_order, output_dir, score_i = 0,score_name
 			scores_data_all.append(scores_data)
 			scores_data_median = np.median(scores_data)
 			scores_data_median_all.append(scores_data_median)
-			ci = [np.percentile(scores_data,5),np.percentile(scores_data,95)]
+			ci = [np.percentile(scores_data,2.5),np.percentile(scores_data,97.5)] # 95% CI
 			scores_data_ci_all.append(ci)
 
 
@@ -183,15 +184,24 @@ def plot_summary(summary, output_dir=None, filename="shap_plot", plot_top_n_shap
 if __name__ == "__main__":
 
 
-	input_dir = './../../datum/vfp/vfp/data/output/vfp_v8_top1outof5/'
+	input_dir = './data/output/vfp_v8_wo_top5/'
 
-	models = 1
+	models = 4
 	permute_order = [False, True]
 	permute_order = permute_order * models
-	os.listdir(input_dir)
+
 
 	dirs = [n for n in os.listdir(input_dir+'outputs/') if 'out-vfp' in n]
 	dirs.sort()
+
+
+	'''
+	import glob
+	dirs = glob.glob(input_dir + '*/out-vfp*', recursive=True)
+	dirs.sort()
+	dirs = [n.replace(input_dir+'outputs/','') for n in dirs]
+	'''
+
 	for results_dir in dirs:
 		json_file = f"specs/{results_dir.split('json')[0]+'json'}".replace('out-vfp', 'vfp') #'northwestern_spec_text_liwc_extremes.json' #'northwestern_spec_text_liwc.json'
 		results_dir = f'outputs/{results_dir}/' # results_dir = 'outputs/out-vfp_spec_4models_both_if_3-19_explanations.json-20200910T072101.085324/'

@@ -64,7 +64,9 @@ We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a s
     * `run_collinearity_speech_explanations.sh` re-runs models setting `gen_shap` to true in spec files to output SHAP values/explanations.
     * `./outputs/` each run will output a dir such as `out-vfp_spec_4models_both_if_1.json-20200910T024552.823868` with the name of the spec file. 
     
+* `performance_stats.py` p-values in Figure 2
 * `./vfp_v8_top5/` runs top 5 featurs specificed in spec files
+
    
 
 #### 2.5. Figure S10 and Table 2:
@@ -90,6 +92,10 @@ Patients recorded with iPad are: `[3,4,5,8,9,12,13,18,24,27,28,29,31,33,38,53,54
     egemaps_vector_speech_wo-24-patients.csv
     egemaps_vector_vowel_wo-24-patients.csv
     ```
+    
+#### 2.10. Supplementary Table S3
+
+See `test_different_recording.ipynb`
 
 
 
