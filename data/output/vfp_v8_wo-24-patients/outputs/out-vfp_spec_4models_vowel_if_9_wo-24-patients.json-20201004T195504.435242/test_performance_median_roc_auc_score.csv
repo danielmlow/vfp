@@ -1,0 +1,5 @@
+,0
+LogisticRegressionCV,0.7779304029304028
+MLPClassifier,0.74375
+RandomForestClassifier,0.7915021929824562
+SGDClassifier,0.8099036927984297

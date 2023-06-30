@@ -1,0 +1,7 @@
+Target (R^2 = 0.51),Target (R^2 = 0.51)
+Covariate,Coefficient
+equivalentSoundLevel_dBp,.22
+shimmerLocaldB_sma3nz_stddevNorm,-.15
+F1amplitudeLogRelF0_sma3nz_amean,-.12
+F0semitoneFrom27.5Hz_sma3nz_pctlrange0-2,.09
+mfcc1V_sma3nz_amean,-.02

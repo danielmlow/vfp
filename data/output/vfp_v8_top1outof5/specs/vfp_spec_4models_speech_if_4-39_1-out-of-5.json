@@ -1,0 +1,15 @@
+{"filename": "egemaps_vector_speech.csv", "target_vars": ["target"], "group_var": "sid",
+  "x_indices": ["equivalentSoundLevel_dBp"],
+  "n_splits": 50, "test_size": 0.2,
+    "clf_info": [
+    ["sklearn.linear_model", "LogisticRegressionCV", {"solver": "liblinear", "penalty": "l1", "max_iter": 100}]
+  ],
+  "permute": [false, true],
+  "gen_feature_importance": false,
+  "gen_permutation_importance": false,
+  "gen_shap": false,
+  "nsamples": "auto",
+  "l1_reg": "aic",
+  "plot_top_n_shap": 16,
+  "metrics": ["roc_auc_score"]
+}

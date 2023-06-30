@@ -1,0 +1,4 @@
+,LogisticRegression,MLP,RandomForest,SGD
+Reading,0.08,0.26,0.09,0.39
+Vowel,0.1,0.11,0.36,0.12
+Reading+Vowel,0.12,0.2,0.12,0.12
