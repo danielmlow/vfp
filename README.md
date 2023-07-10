@@ -5,6 +5,10 @@
 Low, D. M., Randolph, G., Rao, V., Ghosh, S. S. & Song, P., C. (2023). Uncovering the important acoustic features for detecting vocal fold paralysis with explainable machine learning. MedRxiv. 
 
 
+# Tutorial to test our models
+
+`vfp_detector.ipynb` [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danielmlow/vfp/blob/main/vfp_detector.ipynb) 
+
 
 # 1. Data
 
