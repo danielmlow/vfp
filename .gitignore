@@ -11,7 +11,8 @@ data/output/*/outputs_original_full/
 audios
 manuscript/*
 data/output/gam_target*
-*.pkl
+data/output/*/*/*/*.pkl
+data/output/*/*/*/*/*.pkl
 *top_16.png
 *.png
 
