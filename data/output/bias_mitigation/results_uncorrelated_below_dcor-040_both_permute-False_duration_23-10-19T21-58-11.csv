@@ -1,0 +1,3 @@
+,0,1,2,3
+0,LogisticRegressionCV,MLPClassifier,RandomForestClassifier,SGDClassifier
+1,.85 (.79–.9; ),.9 (.85–.94; ),.88 (.82–.92; ),.79 (.71–.86; )

@@ -68,6 +68,7 @@ We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a s
 * `./vfp_v8_top5/` runs top 5 featurs specificed in spec files
 * `analyze_results.py` takes `outputs/out-*` files from pydra-ml and produces summaries which were then concatenated into table 2. Also figures for Sup. Figure S10. 
 * `cpp.ipynb` CPP models
+* `duration.ipynb` Duration models
 
 
 ### Figure 3
