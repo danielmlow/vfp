@@ -52,7 +52,10 @@ To run the `.py` (inluding pydra-ml package) or the `.ipynb` on Jupter Notebook,
 * `./data/input/VFP_DeidentifiedDemographics.csv` De-identified demographic information
 * `demographics.py` Script to obtain info for Table 1.
 
-### Performance results: Figure 2 and Table 2, and Sup. Figure S10
+### Figure 2:
+* `duration.ipynb` 
+
+### Performance results: Figure 3 and Table 2, and Sup. Figure S10
 We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a spec file is needed where the dataset is specified. The dataset needs to be in the same dir where the spec file is run. Since we ran models on a cluster, we have SLURM scripts, so  the dataset is in the same dir as the SLURM scripts.
 `if` and `indfact` stand for independence factor, the algorithm we created for removing redundant features. 
 * `./vfp_v7_indfact/` dir 
@@ -64,30 +67,30 @@ We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a s
     * `run_collinearity_speech_explanations.sh` re-runs models setting `gen_shap` to true in spec files to output SHAP values/explanations.
     * `./outputs/` each run will output a dir such as `out-vfp_spec_4models_both_if_1.json-20200910T024552.823868` with the name of the spec file. 
     
-* `performance_stats.py` p-values in Figure 2
+* `performance_stats.py` p-values in Figure 3
 * `./vfp_v8_top5/` runs top 5 featurs specificed in spec files
 * `analyze_results.py` takes `outputs/out-*` files from pydra-ml and produces summaries which were then concatenated into table 2. Also figures for Sup. Figure S10. 
 * `cpp.ipynb` CPP models
 * `duration.ipynb` Duration models
 
 
-### Figure 3
+### Figure 4
 * `shap_analysis.ipynb` Parallel coordinate plots using SHAP scores.
 
-### Figure 4
+### Figure 5
 * `./vfp_v8_top1outof5/` runs one of the top 5 features at a time.
 * `shap_analysis.ipynb` makes the plots
 
-### Figure 5 and Sup. Fig. S1-S9
+### Figure 6 and Sup. Fig. S1-S9
 * `collinearity.py` remove redudant features (reduce multicollinearity) using Independence Factor
-* `redudant_features.ipynb` Clustermap (Figure 5)
+* `redudant_features.ipynb` Clustermap (Figure 6)
    
-### Table 3, Figure 6, and Figure 7
+### Table 3, Figure 7, and Figure 8
 * `audio_annotation.ipynb` code to run experiment/survey
 * `analyze_annotations.ipynb` 
 
 ### Table 4
-* `classification_wo_correlated_features.ipynb` 
+* `classification_wo_correlated_features_duration.ipynb` 
 
 
 ### Supplementary Table S1
