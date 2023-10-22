@@ -149,3 +149,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+data/input/audio_16khz_trimmed_to_3500ms/
