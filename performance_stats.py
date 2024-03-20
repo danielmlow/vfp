@@ -19,7 +19,7 @@ from scipy import stats
 # def closest(lst, K):
 # 	return lst[min(range(len(lst)), key=lambda i: abs(lst[i] - K))]
 
-def permutation_test_pvalue(mean_score,distribution, method = 1):
+def permutation_test_pvalue(distribution,mean_score, method = 1):
 	'''
 	Old version used Wilcoxon test
 	'''
@@ -95,6 +95,58 @@ def compute_pairwise_stats(df):
 	return effects, pvalues
 
 
+
+import numpy as np
+
+import numpy as np
+
+def benjamini_hochberg_correction(pvalues_2d):
+    # Flatten the 2D array to 1D
+    original_shape = pvalues_2d.shape
+    pvalues_flattened = pvalues_2d.flatten()
+    
+    # Get the original indices of the sorted p-values
+    sorted_indices = np.argsort(pvalues_flattened)
+    sorted_pvalues = pvalues_flattened[sorted_indices]
+    
+    # Number of tests
+    m = len(pvalues_flattened)
+    
+    # Compute the BH-adjusted p-values
+    from statsmodels.stats.multitest import multipletests
+	
+	
+	adjusted_pvalues = np.zeros(m)
+    previous_adjusted_pvalue = 0
+    for i in range(m - 1, -1, -1):
+        rank = i + 1
+        adjusted_pvalue = min(sorted_pvalues[i] * m / rank, 1)
+        # Ensure monotonicity
+        adjusted_pvalue = max(adjusted_pvalue, previous_adjusted_pvalue)
+        adjusted_pvalues[sorted_indices[i]] = adjusted_pvalue
+        previous_adjusted_pvalue = adjusted_pvalue
+    
+    # Reshape to the original 2D structure
+    adjusted_pvalues_2d = adjusted_pvalues.reshape(original_shape)
+    
+    return adjusted_pvalues_2d
+
+# Your provided input
+
+# Your provided input
+pvalues_2d = np.array([
+    [0.01960784, 0.58823529, 0.74509804, 0.19607843],
+    [0.41176471, 0.01960784, 0.62745098, 0.17647059],
+    [0.35294118, 0.37254902, 0.01960784, 0.1372549 ],
+    [0.8627451 , 0.94117647, 0.98039216, 0.03921569]
+])
+
+adjusted_pvalues_2d_corrected = benjamini_hochberg_correction(pvalues_2d)
+adjusted_pvalues_2d_corrected
+
+
+
+
 pd.options.display.width = 0
 
 
@@ -130,6 +182,10 @@ if __name__ == "__main__":
 		# for results_dir in dirs:
 		files = os.listdir(input_dir+results_dir)
 		results_pkl = [n for n in files if 'results' in n][0]
+		
+		# !pip install pydra
+		# !pip install pydra-ml
+
 		with open(os.path.join(input_dir,results_dir, results_pkl), 'rb') as f:
 			results = pickle.load(f)
 
@@ -160,19 +216,33 @@ if __name__ == "__main__":
 			permute = val[0][prefix + ".permute"]
 			for scoreval in score:
 				for idx, metric in enumerate(metrics):
-					df = df.append(
-						{
+					new_row = {
 							"Classifier": name,
 							"type": "null" if permute else "data",
 							"metric": metrics[idx],
 							"score": scoreval[idx] if scoreval[idx] is not None else np.nan,
-						},
-						ignore_index=True,
-					)
+						}
+					df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+
 		order = [group[0] for group in df.groupby("Classifier")]
 		for name, subdf in df.groupby("metric"):
 			if "score" in name:
-				effects, pvalues, = compute_pairwise_stats(subdf)
+				effects, pvalues = compute_pairwise_stats(subdf)
+				diagonal_values = np.diag(pvalues)
+
+				
+				_, adjusted_pvalues, _, _ = multipletests(diagonal_values, alpha=0.05, method='fdr_bh', maxiter=1, is_sorted=False, returnsorted=False)
+				
+
+				# bonferroni
+				# corrected_alpha = 0.05 / (pvalues.shape[0] * pvalues.shape[1])
+
+				print(pvalues)
+				adjusted_pvalues_2d = benjamini_hochberg_correction(pvalues)
+				print(adjusted_pvalues_2d)
+
+
+
 
 				# plot pvalues
 				sns.set(style="whitegrid", palette="pastel", color_codes=True)
@@ -204,7 +274,7 @@ if __name__ == "__main__":
 
 				timestamp = datetime.datetime.utcnow().isoformat()
 				timestamp = timestamp.replace(":", "").replace("-", "")
-				plt.savefig(input_dir+results_dir+f"stats-{name}-{timestamp}.png")
+				# plt.savefig(input_dir+results_dir+f"stats-{name}-{timestamp}.png")
 				plt.close()
 				save_obj(
 					dict(effects=effects, pvalues=pvalues, order=order),
@@ -255,7 +325,7 @@ for model_mean_score in range(n_models):
 		df_null.columns = columns
 		columns.sort() # we put cols in alphabetical order to match the test and stats plot
 		df_null = df_null[columns]
-		df_null.to_csv(os.path.join(output_dir, f'test_performance_with_null_{score_name}.csv')) # Todo add timestep
+		# df_null.to_csv(os.path.join(output_dir, f'test_performance_with_null_{score_name}.csv')) # Todo add timestep
 		print(df_null.values)
 		print('=====')
 
@@ -267,8 +337,8 @@ for model_mean_score in range(n_models):
 	df_all.columns = columns
 	columns.sort()  # we put cols in alphabetical order to match the test and stats plot
 	df_all = df_all[columns]
-	df_all.to_csv(os.path.join(output_dir, f'test_performance_{score_name}.csv'))# Todo add timestep
+	# df_all.to_csv(os.path.join(output_dir, f'test_performance_{score_name}.csv'))# Todo add timestep
 	df_median = df_all.median()
-	df_median.to_csv(os.path.join(output_dir, f'test_performance_median_{score_name}.csv'))  # Todo add timestep
+	# df_median.to_csv(os.path.join(output_dir, f'test_performance_median_{score_name}.csv'))  # Todo add timestep
 
 

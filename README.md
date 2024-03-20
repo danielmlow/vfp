@@ -2,7 +2,8 @@
 
 **Cite this article if using the data:**
 
-Low, D. M., Randolph, G., Rao, V., Ghosh, S. S. & Song, P., C. (2023). Uncovering the important acoustic features for detecting vocal fold paralysis with explainable machine learning. MedRxiv. 
+Low, D. M., Rao, V., Randolph, G., Song, P. C., & Ghosh, S. S. (2023). Identifying bias in models that detect vocal fold paralysis from audio recordings using explainable machine learning and clinician ratings. medRxiv.
+
 
 
 ### Tutorial to test our models
@@ -55,7 +56,9 @@ To run the `.py` (inluding pydra-ml package) or the `.ipynb` on Jupter Notebook,
 ### Figure 2:
 * `duration.ipynb` 
 
-### Performance results: Figure 3 and Table 2, and Sup. Figure S10
+
+
+### Performance results: Figure 3 and Table 2, and Sup. Figure S12
 We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a spec file is needed where the dataset is specified. The dataset needs to be in the same dir where the spec file is run. Since we ran models on a cluster, we have SLURM scripts, so  the dataset is in the same dir as the SLURM scripts.
 `if` and `indfact` stand for independence factor, the algorithm we created for removing redundant features. 
 * `./vfp_v7_indfact/` dir 
@@ -73,7 +76,6 @@ We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a s
 * `cpp.ipynb` CPP models
 * `duration.ipynb` Duration models
 
-
 ### Figure 4
 * `shap_analysis.ipynb` Parallel coordinate plots using SHAP scores.
 
@@ -81,7 +83,7 @@ We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a s
 * `./vfp_v8_top1outof5/` runs one of the top 5 features at a time.
 * `shap_analysis.ipynb` makes the plots
 
-### Figure 6 and Sup. Fig. S1-S9
+### Figure 6 and Sup. Fig. S3-S11
 * `collinearity.py` remove redudant features (reduce multicollinearity) using Independence Factor
 * `redudant_features.ipynb` Clustermap (Figure 6)
    
@@ -89,13 +91,26 @@ We ran models using [pydra-ml](https://github.com/nipype/pydra-ml) for which a s
 * `audio_annotation.ipynb` code to run experiment/survey
 * `analyze_annotations.ipynb` 
 
-### Table 4
-* `classification_wo_correlated_features_duration.ipynb` 
+### Table 4 and Sup. Table S5
+* `classification_wo_correlated_features_duration_trimmed.ipynb` 
 
+## Other Sup. figures and tables
 
-### Supplementary Table S1
+### Sup. Figure S1 (n bootstrap splits) Sup. Table S1 (hyperparameter tuning)
+* `classification_vfp_hyperparameter_tuning.py` main results with hyperparameter tuning and n_bootstraps for Sup. Mat. 
+
+### Sup. Figure S2
+`nonmonotonic_associations.R`
+
+### Sup. Table S2 
+See `test_different_recording.ipynb`
+
+### Sup. Table S3 and Table S4
 We removed 24 patients that were recorded using a different device (an iPad). If performance drops significantly, then the original dataset may be using recording set up to dissociate groups (i.e., if features related to iPad are within certain range determined by iPad, then prediction equals patient).
 Patients recorded with iPad are: `[3,4,5,8,9,12,13,18,24,27,28,29,31,33,38,53,54,55,56,64,65,66,71,74]`  
+
+`test_different_recording.ipynb`
+
 * `./data/input/features/egemaps_vector_both_wo-24-patients.csv` dataset
 * `./data/output/vfp_v8_wo-24-patients/` pydra-ml scripts
 * ```
@@ -103,10 +118,10 @@ Patients recorded with iPad are: `[3,4,5,8,9,12,13,18,24,27,28,29,31,33,38,53,54
     egemaps_vector_speech_wo-24-patients.csv
     egemaps_vector_vowel_wo-24-patients.csv
     ```
-    
-### Sup. Table S2 and Sup. Table S3
 
-See `test_different_recording.ipynb`
+### Sup. Table S6
+
+See `features_correlated_with_duration.ipynb`
 
 
 

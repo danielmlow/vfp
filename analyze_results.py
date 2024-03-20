@@ -160,27 +160,6 @@ def plot_summary(summary, output_dir=None, filename="shap_plot", plot_top_n_shap
 	plt.show(block=False)
 
 
-# # Redo plots
-# # =============================================
-# # Obtain results pkl
-# input_dir = './../vfp_v6_collinearity/'
-# results_dir = 'out-voto_spec.json-20200822T104154.938604/'
-# json_file = 'northwestern_spec_text_liwc_extremes.json' #'northwestern_spec_text_liwc.json'
-#
-# # Redo plots
-#
-# input_dir = input_dir+dirs[0]+'/shap-20200822T104159.176859/'
-# output_dir = input_dir
-#
-# for file in os.listdir(input_dir):#todo pasar nuevo report a pydra cluster
-# 	if file.endswith('.csv'):
-# 		summary = pd.read_csv(input_dir+file, index_col=0)
-# 		plot_summary(summary, output_dir=output_dir, filename=file, plot_top_n_shap=16)
-# =============================================
-
-
-
-
 if __name__ == "__main__":
 
 
@@ -203,13 +182,13 @@ if __name__ == "__main__":
 	'''
 
 	for results_dir in dirs:
-		json_file = f"specs/{results_dir.split('json')[0]+'json'}".replace('out-vfp', 'vfp') #'northwestern_spec_text_liwc_extremes.json' #'northwestern_spec_text_liwc.json'
+		json_file = f"specs/{results_dir.split('json')[0]+'json'}".replace('out-vfp', 'vfp') 
 		results_dir = f'outputs/{results_dir}/' # results_dir = 'outputs/out-vfp_spec_4models_both_if_3-19_explanations.json-20200910T072101.085324/'
 		with open(input_dir+json_file, 'r') as f:
 			spec_file = json.load(f)
 
 		feature_names = spec_file['x_indices']
-		score_names = ["roc_auc_score"] #["f1_score", "roc_auc_score"] #todo obtain from json
+		score_names = ["roc_auc_score"]
 
 		# for results_dir in dirs:
 		files = os.listdir(input_dir+results_dir)
@@ -221,9 +200,6 @@ if __name__ == "__main__":
 		for score_i, score_name in enumerate(score_names):
 			print(results_dir)
 			performance_table(results, permute_order, output_dir, score_i=score_i, score_name = score_names[score_i], round = 2)
-			# feature_importance_to_summary(results, permute_order, feature_names, output_dir)
-			# permutation_importance_to_summary(results, permute_order, feature_names, output_dir)
-
 
 	# ====================================================
 	# Obtain results pkl
@@ -242,14 +218,7 @@ if __name__ == "__main__":
 	dirs = os.listdir(input_dir)
 	dirs = [n for n in dirs if not n.startswith('.')]
 	dirs.sort()
-	# dirs = ['out-northwestern_spec_text_liwc_extremes.json-20200819T100712.772595']
-	# 				# 'out-vfp_spec_4models_vowel.json-20200814T100938.800433',
-	# 				# 'out-vfp_spec_4models_both.json-20200814T085556.295861']
 
-
-
-
-	# this would have been done by pydraml
 
 	for collinearity_method in collinearity_methods :
 		for data_type in data_types:
@@ -258,13 +227,6 @@ if __name__ == "__main__":
 
 			vars_count_by_thesh_id = []
 			vars_by_thesh_id = []
-				# if not 'out-' in results_dir or not data_type in results_dir or not '_'+collinearity_method in results_dir:
-				# 	continue
-				# data_type_file = results_dir.split('.json')[0].split('_')[-3]
-				# collinearity_method_file = results_dir.split('.json')[0].split('_')[-2]
-				#
-				# # assert data_type ==data_type_file and collinearity_method == collinearity_method_file
-				# job_array_id = results_dir.split('.json')[0].split('_')[-1]
 
 
 			for job_array_id in range(1,thresholds_n+1):
@@ -281,7 +243,7 @@ if __name__ == "__main__":
 				models = len(spec_file['clf_info'])
 				permute_order = spec_file['permute']  # [False, True]
 				permute_order = permute_order * models
-				score_names = spec_file['metrics']  # ["f1_score", "roc_auc_score"]
+				score_names = spec_file['metrics'] 
 
 				# Load results
 				results_dir = [n for n in os.listdir(input_dir) if (data_type in n and '_'+collinearity_method in n and '_'+str(job_array_id)+'.' in n)]
@@ -315,11 +277,6 @@ if __name__ == "__main__":
 
 					performance_median.append(df_median)
 					performance_all.append(df_all)
-
-
-				# feature_importance_to_summary(results, permute_order, feature_names, output_dir)
-				# permutation_importance_to_summary(results, permute_order, feature_names, output_dir)
-
 
 
 			performance_median_df = pd.concat(performance_median, axis=1).T
